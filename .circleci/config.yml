@@ -24,6 +24,10 @@ jobs:
     steps:
       - checkout
       - run: echo "Building"
+      - when:
+          condition: << pipeline.parameters.hold_deploy_flag >>
+          steps:
+            - run: echo "Conditional Building step"
             
   hold_step:
     type: approval
@@ -32,10 +36,10 @@ jobs:
     docker: 
       - image: cimg/node:14.10.1
     steps:
-      - when:
-          condition: << pipeline.parameters.hold_deploy_flag >>
-          steps:
-            - hold_step
+      #- when:
+      #    condition: << pipeline.parameters.hold_deploy_flag >>
+      #    steps:
+      #      - hold_step
       - checkout
       - run: echo "Deploying"
             
