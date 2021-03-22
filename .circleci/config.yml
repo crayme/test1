@@ -18,6 +18,8 @@ workflows:
           requires: 
             - build_job
           filters:
+            branches:
+              ignore: master
             tags:
               only: with_approval
       - hold_deploy_2:
@@ -25,6 +27,8 @@ workflows:
           requires: 
             - build_job
           filters:
+            branches:
+              ignore: master
             tags:
               only: with_approval
       - deploy_job:
