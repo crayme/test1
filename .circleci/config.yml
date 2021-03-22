@@ -16,6 +16,9 @@ workflows:
       - deploy_job:
           requires:
             - build_job
+    hold_step:
+      type: approval
+      requires: build_job
 
 jobs:
   build_job:
@@ -30,9 +33,6 @@ jobs:
             - run: echo "Conditional Building step"
             - hold_step
             
-  hold_step:
-    type: approval
-    requires: build_job
     
   deploy_job:
     docker: 
