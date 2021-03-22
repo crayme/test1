@@ -12,17 +12,7 @@ workflows:
   integration_tests:
     when: << pipeline.parameters.run_integration_tests >>
     jobs:
-      - hold_build:
-          type: approval
-          filters:
-            branches:
-              ignore: master
-            tags:
-              only: with_approval
-
       - build_job:
-          requires:
-            - hold_build
           filters:
             branches:
               only: master
