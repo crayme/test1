@@ -20,6 +20,9 @@ workflows:
       type: approval
       requires: 
         - build_job
+      filters:
+        branches:
+          ignore: master
 
 jobs:
   build_job:
