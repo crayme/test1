@@ -31,7 +31,7 @@ workflows:
       - hold_deploy_1:
           type: approval
           requires: 
-            - build_job
+            - download_artifact_job
           filters:
             branches:
               ignore: master
@@ -41,7 +41,7 @@ workflows:
       - hold_deploy_2:
           type: approval
           requires: 
-            - build_job
+            - download_artifact_job
           filters:
             branches:
               ignore: master
@@ -51,7 +51,7 @@ workflows:
       - hold_deploy_3:
           type: approval
           requires: 
-            - build_job
+            - download_artifact_job
           filters:
             branches:
               ignore: master
