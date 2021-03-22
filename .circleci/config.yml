@@ -3,10 +3,10 @@ parameters:
   run_integration_tests:
     type: boolean
     default: true
-  build:
+  build_flag:
     type: boolean
     default: false
-  deploy:
+  deploy_flag:
     type: boolean
     default: true
 
@@ -16,9 +16,9 @@ workflows:
     when: << pipeline.parameters.run_integration_tests >>
     jobs:
       - build_job
-      - deploy_job
-          #requires:
-          #  - build_job
+      - deploy_job:
+          requires:
+            - build_job
 
 jobs:
   build_job:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
       - when:
-          condition: << pipeline.parameters.build >>
+          condition: << pipeline.parameters.build_flag >>
           steps:
             - run: echo "Building"
             
@@ -37,6 +37,6 @@ jobs:
     steps:
       - checkout
       - when:
-          condition: << pipeline.parameters.deploy >>
+          condition: << pipeline.parameters.deploy_flag >>
           steps:
             - run: echo "Deploying"
