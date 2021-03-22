@@ -17,12 +17,12 @@ workflows:
           requires:
             - build_job
       - hold_step:
-        type: approval
-        requires: 
-          - build_job
-        filters:
-          branches:
-            ignore: master
+          type: approval
+          requires: 
+            - build_job
+          filters:
+            branches:
+              ignore: master
 
 jobs:
   build_job:
