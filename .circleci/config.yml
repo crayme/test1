@@ -19,6 +19,15 @@ workflows:
             tags:
               only: with_approval
           
+      - download_artifact_job:
+          requires: 
+            - build_job
+          filters:
+            branches:
+              only: master
+            tags:
+              only: with_approval
+
       - hold_deploy_1:
           type: approval
           requires: 
@@ -39,8 +48,18 @@ workflows:
             tags:
               only: with_approval
 
+      - hold_deploy_3:
+          type: approval
+          requires: 
+            - build_job
+          filters:
+            branches:
+              ignore: master
+            tags:
+              only: with_approval
+
       - deploy_job:
-          name: Deploy app 1
+          name: Deploy server 1
           requires:
             - build_job
             - hold_deploy_1
@@ -51,10 +70,21 @@ workflows:
               only: with_approval
 
       - deploy_job:
-          name: Deploy app 2
+          name: Deploy server 2
           requires:
             - build_job
             - hold_deploy_2
+          filters:
+            branches:
+              only: master
+            tags:
+              only: with_approval
+
+      - deploy_job:
+          name: Deploy server 3
+          requires:
+            - build_job
+            - hold_deploy_3
           filters:
             branches:
               only: master
@@ -75,6 +105,13 @@ jobs:
             #- hold_deploy
             
     
+  download_artifact_job:
+    docker: 
+      - image: cimg/node:14.10.1
+    steps:
+      - checkout
+      - run: echo "Downloading artifact"
+
   deploy_job:
     docker: 
       - image: cimg/node:14.10.1
