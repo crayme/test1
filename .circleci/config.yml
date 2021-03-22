@@ -22,7 +22,8 @@ workflows:
             - build_job
           filters:
             branches:
-              ignore: master
+              #ignore: master
+              only: master
 
 jobs:
   build_job:
