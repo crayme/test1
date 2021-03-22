@@ -18,7 +18,8 @@ workflows:
             - build_job
     hold_step:
       type: approval
-      requires: build_job
+      requires: 
+        - build_job
 
 jobs:
   build_job:
