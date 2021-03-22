@@ -28,9 +28,10 @@ jobs:
           condition: << pipeline.parameters.hold_deploy_flag >>
           steps:
             - run: echo "Conditional Building step"
+            - hold_step
             
-  #hold_step:
-  #  type: approval
+  hold_step:
+    type: approval
     
   deploy_job:
     docker: 
