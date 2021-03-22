@@ -30,8 +30,9 @@ jobs:
             - run: echo "Conditional Building step"
             - hold_step
             
-#  hold_step:
-#    type: approval
+  hold_step:
+    type: approval
+    requires: build_job
     
   deploy_job:
     docker: 
