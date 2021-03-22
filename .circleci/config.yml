@@ -14,8 +14,6 @@ workflows:
     jobs:
       - hold_build:
           type: approval
-          requires: 
-            - build_job
           filters:
             branches:
               ignore: master
