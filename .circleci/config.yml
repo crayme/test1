@@ -1,11 +1,25 @@
 version: 2.1
+
+parameters:
+  run_integration_tests:
+    type: boolean
+    default: false
+  deploy:
+    type: boolean
+    default: false
+
+workflows:
+  version: 2
+  integration_tests:
+    when: << pipeline.parameters.run_integration_tests >>
+    jobs:
+      - mytestjob
+
 jobs:
-  build:
-    docker: 
-      - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
-#        auth:
-#          username: mydockerhub-user
-#          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  mytestjob:
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - checkout
+      - when:
+          condition: << pipeline.parameters.deploy >>
+          steps:
+            - run: echo "deploying"
