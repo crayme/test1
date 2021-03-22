@@ -18,17 +18,15 @@ workflows:
           requires: 
             - build_job
           filters:
-            branches:
-              #ignore: master
-              only: master
+            tags:
+              only: with_approval
       - hold_deploy_2:
           type: approval
           requires: 
             - build_job
           filters:
-            branches:
-              #ignore: master
-              only: master
+            tags:
+              only: with_approval
       - deploy_job:
           name: Deploy app 1
           requires:
