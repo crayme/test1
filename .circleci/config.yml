@@ -3,10 +3,7 @@ parameters:
   run_integration_tests:
     type: boolean
     default: true
-  build_flag:
-    type: boolean
-    default: false
-  deploy_flag:
+  hold_deploy_flag:
     type: boolean
     default: true
 
@@ -26,17 +23,19 @@ jobs:
       - image: cimg/node:14.10.1
     steps:
       - checkout
-      - when:
-          condition: << pipeline.parameters.build_flag >>
-          steps:
-            - run: echo "Building"
+      - run: echo "Building"
             
+  hold_step:
+    type: approval
+    
   deploy_job:
     docker: 
       - image: cimg/node:14.10.1
     steps:
-      - checkout
       - when:
-          condition: << pipeline.parameters.deploy_flag >>
+          condition: << pipeline.parameters.hold_deploy_flag >>
           steps:
-            - run: echo "Deploying"
+            - hold_step
+      - checkout
+      - run: echo "Deploying"
+            
