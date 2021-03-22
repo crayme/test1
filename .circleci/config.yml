@@ -12,7 +12,13 @@ workflows:
   integration_tests:
     when: << pipeline.parameters.run_integration_tests >>
     jobs:
-      - build_job
+      - build_job:
+          filters:
+            branches:
+              only: master
+            tags:
+              only: with_approval
+          
       - hold_deploy_1:
           type: approval
           requires: 
@@ -22,6 +28,7 @@ workflows:
               ignore: master
             tags:
               only: with_approval
+
       - hold_deploy_2:
           type: approval
           requires: 
@@ -31,16 +38,28 @@ workflows:
               ignore: master
             tags:
               only: with_approval
+
       - deploy_job:
           name: Deploy app 1
           requires:
             - build_job
             - hold_deploy_1
+          filters:
+            branches:
+              only: master
+            tags:
+              only: with_approval
+
       - deploy_job:
           name: Deploy app 2
           requires:
             - build_job
             - hold_deploy_2
+          filters:
+            branches:
+              only: master
+            tags:
+              only: with_approval
 
 jobs:
   build_job:
