@@ -8,7 +8,7 @@ parameters:
     default: false
   deploy:
     type: boolean
-    default: true
+    default: false
 
 workflows:
   version: 2
