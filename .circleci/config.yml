@@ -61,7 +61,7 @@ workflows:
       - deploy_job:
           name: Deploy server 1
           requires:
-            - build_job
+            - download_artifact_job
             - hold_deploy_1
           filters:
             branches:
@@ -72,7 +72,7 @@ workflows:
       - deploy_job:
           name: Deploy server 2
           requires:
-            - build_job
+            - download_artifact_job
             - hold_deploy_2
           filters:
             branches:
@@ -83,7 +83,7 @@ workflows:
       - deploy_job:
           name: Deploy server 3
           requires:
-            - build_job
+            - download_artifact_job
             - hold_deploy_3
           filters:
             branches:
