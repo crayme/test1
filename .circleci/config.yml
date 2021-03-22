@@ -22,6 +22,12 @@ workflows:
               #ignore: master
               only: master
       - deploy_job:
+          name: Deploy app 1
+          requires:
+            - build_job
+            - hold_deploy
+      - deploy_job:
+          name: Deploy app 2
           requires:
             - build_job
             - hold_deploy
