@@ -21,7 +21,7 @@ workflows:
             branches:
               #ignore: master
               only: master
-      - hold_deploy_1:
+      - hold_deploy_2:
           type: approval
           requires: 
             - build_job
