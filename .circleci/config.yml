@@ -12,7 +12,7 @@ workflows:
   integration_tests:
     when: << pipeline.parameters.run_integration_tests >>
     jobs:
-      #- build_job
+      - build_job
       - deploy_job:
           requires:
             - build_job
