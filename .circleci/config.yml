@@ -35,7 +35,7 @@ jobs:
           condition: << pipeline.parameters.hold_deploy_flag >>
           steps:
             - run: echo "Conditional Building step"
-            - hold_step
+            #- hold_step
             
     
   deploy_job:
