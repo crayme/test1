@@ -13,17 +13,18 @@ workflows:
     when: << pipeline.parameters.run_integration_tests >>
     jobs:
       - build_job
-      - deploy_job:
-          requires:
-            - build_job
-      - hold_step:
+      - hold_deploy:
           type: approval
           requires: 
             - build_job
           filters:
             branches:
-              #ignore: master
-              only: master
+              ignore: master
+              #only: master
+      - deploy_job:
+          requires:
+            - build_job
+            - hold_deploy
 
 jobs:
   build_job:
@@ -36,7 +37,7 @@ jobs:
           condition: << pipeline.parameters.hold_deploy_flag >>
           steps:
             - run: echo "Conditional Building step"
-            #- hold_step
+            #- hold_deploy
             
     
   deploy_job:
@@ -46,6 +47,6 @@ jobs:
       #- when:
       #    condition: << pipeline.parameters.hold_deploy_flag >>
       #    steps:
-      #      - hold_step
+      #      - hold_deploy
       - checkout
       - run: echo "Deploying"
